@@ -1,0 +1,23 @@
+---
+  - name: "Playing with Ansible and Git"
+    hosts: localhost
+    #connection: local 
+    tasks:
+
+    - name: "just execute a ls -lrt command"
+      shell: "ls -lrt"
+      register: "output"
+
+    - debug: var=output.stdout_lines
+
+    - name: "test sudo with become"
+      shell: "ls /root"
+      register: "output"
+      become: true
+
+    - debug: var=output.stdout_lines
+
+    - name: Install htop (state=present is optional)
+      apt:
+        name: htop
+        state: present
